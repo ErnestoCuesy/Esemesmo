@@ -42,10 +42,14 @@ class SettingsViewState extends State<SettingsView> {
       return Container(
         child: ElevatedButton(
           style: ButtonStyle(
-            foregroundColor: MaterialStateProperty.all<Color>(
+            backgroundColor: MaterialStateProperty.all<Color>(
                 globalData.preferences.budgetCycleDay == (index + 1)
                     ? Colors.pink[100]
                     : Colors.green[100]),
+            foregroundColor: MaterialStateProperty.all<Color>(
+                globalData.preferences.budgetCycleDay == (index + 1)
+                    ? Colors.black
+                    : Colors.pink[200]),
           ),
           onPressed: () async {
             setState(() {
