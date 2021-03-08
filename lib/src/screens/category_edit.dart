@@ -16,22 +16,22 @@ class CategoryEdit extends StatefulWidget {
 class _CategoryEditState extends State<CategoryEdit> {
   final formKey = GlobalKey<FormState>();
   final f = NumberFormat.currency(customPattern: "#.##");
-  final snackBarCategorySaved = SnackBar(content: Text('Category saved'),);
+  final snackBarCategorySaved = SnackBar(
+    content: Text('Category saved'),
+  );
 
   String newCategoryName;
   double newBudgetAmount = 0.0;
   double newThresholdAmount = 0.0;
 
-  Widget categoryName(){
+  Widget categoryName() {
     return TextFormField(
       textCapitalization: TextCapitalization.sentences,
       onSaved: (String category) {
         this.newCategoryName = category;
       },
       decoration: const InputDecoration(
-          labelText: 'Category name',
-          hintText:'Enter category name'
-      ),
+          labelText: 'Category name', hintText: 'Enter category name'),
       initialValue: widget.originalCategory.name,
       validator: validateCategoryName,
     );
@@ -41,12 +41,10 @@ class _CategoryEditState extends State<CategoryEdit> {
     return TextFormField(
       keyboardType: TextInputType.numberWithOptions(decimal: true),
       onSaved: (String amount) {
-          this.newBudgetAmount = double.parse(amount) * 1.0;
+        this.newBudgetAmount = double.parse(amount) * 1.0;
       },
       decoration: const InputDecoration(
-          labelText: 'Budget amount',
-          hintText: 'Enter budget amount'
-      ),
+          labelText: 'Budget amount', hintText: 'Enter budget amount'),
       initialValue: "${f.format(widget.originalCategory.budgetAmount)}",
       validator: validateBudget,
     );
@@ -56,22 +54,23 @@ class _CategoryEditState extends State<CategoryEdit> {
     return TextFormField(
       keyboardType: TextInputType.numberWithOptions(decimal: true),
       onSaved: (String amount) {
-          this.newThresholdAmount = double.parse(amount) * 1.0;
+        this.newThresholdAmount = double.parse(amount) * 1.0;
       },
       decoration: const InputDecoration(
           labelText: 'Alert threshold',
-          hintText: 'Enter minimum threshold alert'
-      ),
+          hintText: 'Enter minimum threshold alert'),
       initialValue: "${f.format(widget.originalCategory.threshold)}",
       validator: validateThreshold,
     );
   }
 
-  Widget saveButton(){
+  Widget saveButton() {
     return Padding(
       padding: const EdgeInsets.all(2.0),
-      child: RaisedButton(
-        color: Colors.pink[100],
+      child: ElevatedButton(
+        style: ButtonStyle(
+          foregroundColor: MaterialStateProperty.all<Color>(Colors.pink[100]),
+        ),
         child: Text('Save'),
         onPressed: validateFields,
       ),
@@ -110,7 +109,8 @@ class _CategoryEditState extends State<CategoryEdit> {
           budgetAmount: newBudgetAmount,
           threshold: newThresholdAmount,
           transactionsTotal: 0.0));
-      Scaffold.of(formKey.currentContext).showSnackBar(snackBarCategorySaved);
+      ScaffoldMessenger.of(formKey.currentContext)
+          .showSnackBar(snackBarCategorySaved);
       Timer(Duration(seconds: 2), () {
         Navigator.pop(context, false);
       });
@@ -124,11 +124,11 @@ class _CategoryEditState extends State<CategoryEdit> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomPadding: false,
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: Text(
           'Edit Category',
-        style: TextStyle(fontSize: 16.0),
+          style: TextStyle(fontSize: 16.0),
         ),
       ),
       body: Container(

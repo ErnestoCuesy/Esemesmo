@@ -19,9 +19,9 @@ class EmailServices {
 
   static Future<String> writeCSV() async {
     String file;
-    List<List<dynamic>> rows = List<List<dynamic>>();
+    List<List<dynamic>> rows = [];
     for (int i = 0; i < globalData.transactions.length; i++) {
-      List<dynamic> row = List();
+      List<dynamic> row = [];
       row.add(Utilities.formatDateTime(globalData.transactions[i].date));
       row.add(globalData.transactions[i].vendor);
       row.add(globalData.transactions[i].amount);

@@ -166,19 +166,19 @@ class _CategoryListViewState extends State<CategoryListView> {
                 content: Text(
                     "There are $txCount payments allocated to this category, but don't worry they'll be uncategorized."),
                 actions: <Widget>[
-                  FlatButton(
+                  TextButton(
                     child: Text("Yes, delete category"),
                     onPressed: () {
                       setState(() {
                         _deleteCategory(index);
-                        Scaffold.of(scaffoldContext)
+                        ScaffoldMessenger.of(scaffoldContext)
                             .showSnackBar(snackBarCategoryDeleted);
                         Navigator.of(context).pop();
                         dismiss = true;
                       });
                     },
                   ),
-                  FlatButton(
+                  TextButton(
                     child: Text("No, cancel"),
                     onPressed: () {
                       Navigator.of(context).pop();
@@ -191,7 +191,8 @@ class _CategoryListViewState extends State<CategoryListView> {
       } else {
         setState(() {
           _deleteCategory(index);
-          Scaffold.of(scaffoldContext).showSnackBar(snackBarCategoryDeleted);
+          ScaffoldMessenger.of(scaffoldContext)
+              .showSnackBar(snackBarCategoryDeleted);
           dismiss = true;
         });
       }

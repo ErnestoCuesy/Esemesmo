@@ -18,7 +18,8 @@ class _BudgetViewState extends State<BudgetView> {
   void initState() {
     super.initState();
     PaymentServices.copyTransactions(COPY_ALL, 0, 0);
-    PaymentServices.buildAccountingYearMonthList(globalData.preferences.budgetCycleDay);
+    PaymentServices.buildAccountingYearMonthList(
+        globalData.preferences.budgetCycleDay);
     CategoryServices.calculateCategoryTotals(99, 99);
     setState(() {
       print("Totals loaded");
@@ -45,10 +46,7 @@ class _BudgetViewState extends State<BudgetView> {
         },
         itemBuilder: (BuildContext context) {
           return globalData.accountingYearMonthList.map((String ymItem) {
-            return PopupMenuItem<String>(
-              child: Text(ymItem),
-              value: ymItem
-            );
+            return PopupMenuItem<String>(child: Text(ymItem), value: ymItem);
           }).toList();
         });
   }
@@ -59,8 +57,8 @@ class _BudgetViewState extends State<BudgetView> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-            "My Budget Status for ($_yearMonth)",
-        style: TextStyle(fontSize: 16.0),
+          "My Budget Status for ($_yearMonth)",
+          style: TextStyle(fontSize: 16.0),
         ),
         actions: <Widget>[yearMonthMenuButton()],
       ),
@@ -75,20 +73,31 @@ class _BudgetViewState extends State<BudgetView> {
   }
 
   List<Widget> _buildGridTilesButton(int numberOfTiles) {
-    List<Container> containers = List<Container>.generate(numberOfTiles, (int index) {
+    List<Container> containers =
+        List<Container>.generate(numberOfTiles, (int index) {
       return Container(
-        child: RaisedButton(
-          elevation: 8.0,
-          color: CategoryServices.categoryRAG(globalData.categoryTotals[index].budgetAmount, globalData.categoryTotals[index].threshold, globalData.categoryTotals[index].transactionsTotal),
+        child: ElevatedButton(
+          style: ButtonStyle(
+            foregroundColor: MaterialStateProperty.all<Color>(Colors.black),
+            backgroundColor: MaterialStateProperty.all<Color>(
+                CategoryServices.categoryRAG(
+                    globalData.categoryTotals[index].budgetAmount,
+                    globalData.categoryTotals[index].threshold,
+                    globalData.categoryTotals[index].transactionsTotal)),
+            elevation: MaterialStateProperty.all<double>(8.0),
+          ),
           onPressed: () async {
             var trans;
             if (_year == 99 && _month == 99) {
               trans = globalData.transactionsMaster.where((payment) {
-                return (payment.category == globalData.categoryTotals[index].id);
+                return (payment.category ==
+                    globalData.categoryTotals[index].id);
               }).toList();
             } else {
               trans = globalData.transactionsMaster.where((payment) {
-                return (payment.accountingYear == _year && payment.accountingMonth == _month && payment.category == globalData.categoryTotals[index].id);
+                return (payment.accountingYear == _year &&
+                    payment.accountingMonth == _month &&
+                    payment.category == globalData.categoryTotals[index].id);
               }).toList();
             }
             _popUpTransactionList(trans);
@@ -115,19 +124,18 @@ class _BudgetViewState extends State<BudgetView> {
 
   categoryName(int index) {
     return Padding(
-      padding: const EdgeInsets.only(bottom:18.0, top: 16.0),
-      child: Column(
-        children: <Widget>[
-          Text(
-            globalData.categoryTotals[index].name,
-            style: TextStyle(
-                fontWeight: FontWeight.w500,
-                fontSize: 18.0
-            ),
-          ),
-          Icon(CategoryServices.categoryIcon(globalData.categoryTotals[index].id))
-        ]
-      ),
+      padding: const EdgeInsets.only(bottom: 32.0, top: 24.0),
+      child: Column(children: <Widget>[
+        Text(
+          globalData.categoryTotals[index].name,
+          style: TextStyle(fontWeight: FontWeight.w500, fontSize: 18.0),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Icon(CategoryServices.categoryIcon(
+              globalData.categoryTotals[index].id)),
+        )
+      ]),
     );
   }
 
@@ -146,8 +154,7 @@ class _BudgetViewState extends State<BudgetView> {
               Text(
                 "${f.format(globalData.categoryTotals[index].budgetAmount)}",
               ),
-            ]
-        ),
+            ]),
       );
     }
   }
@@ -167,8 +174,7 @@ class _BudgetViewState extends State<BudgetView> {
               Text(
                 "${f.format(globalData.categoryTotals[index].threshold)}",
               ),
-            ]
-        ),
+            ]),
       );
     }
   }
@@ -185,8 +191,7 @@ class _BudgetViewState extends State<BudgetView> {
             Text(
               "${f.format(globalData.categoryTotals[index].transactionsTotal)}",
             ),
-          ]
-      ),
+          ]),
     );
   }
 
@@ -205,8 +210,7 @@ class _BudgetViewState extends State<BudgetView> {
               Text(
                 "${f.format((globalData.categoryTotals[index].budgetAmount - globalData.categoryTotals[index].transactionsTotal))}",
               ),
-            ]
-        ),
+            ]),
       );
     }
   }
