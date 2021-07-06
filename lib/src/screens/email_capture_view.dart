@@ -54,6 +54,7 @@ class EmailCapture extends ModalRoute<void> {
     );
   }
 
+  // ignore: missing_return
   String validateEmailAddress(String email) {
     RegExp emailMatchPattern = RegExp('$regExEmail');
     Iterable<Match> matches = emailMatchPattern.allMatches(email);

@@ -77,22 +77,27 @@ class _CategoryEditState extends State<CategoryEdit> {
     );
   }
 
+  // ignore: missing_return
   String validateCategoryName(String name) {
     if (name.isEmpty) {
       return 'Invalid category name';
     }
   }
 
+  // ignore: missing_return
   String validateBudget(String amount) {
     try {
+      // ignore: unused_local_variable
       double budget = double.parse(amount) * 1.0;
     } catch (e) {
       return 'Invalid budget amount';
     }
   }
 
+  // ignore: missing_return
   String validateThreshold(String amount) {
     try {
+      // ignore: unused_local_variable
       double threshold = double.parse(amount) * 1.0;
     } catch (e) {
       return 'Invalid threshold amount';
